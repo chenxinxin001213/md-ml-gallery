@@ -3,35 +3,37 @@
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>E-Field ML-MD Analysis Gallery</title><style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Georgia,"Times New Roman","Noto Serif SC","Source Han Serif SC",serif;background:#fdfcf9;color:#2c2c2c;line-height:1.8}
-nav{position:fixed;top:0;left:0;width:220px;height:100vh;background:#f5f2ec;color:#2c2c2c;padding:24px 18px;overflow-y:auto;z-index:100;border-right:1px solid #e0dcd4;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-nav h1{font-size:15px;color:#8b4513;margin-bottom:4px;font-family:Georgia,serif;font-style:italic}
-nav .sub{font-size:10px;color:#999;margin-bottom:16px;font-family:-apple-system,sans-serif}
-nav a{display:block;color:#5c5c5c;text-decoration:none;padding:3px 8px;border-radius:2px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:-apple-system,sans-serif}
-nav a:hover{background:#e8e2d6;color:#2c2c2c}
-nav .cat{font-size:9px;color:#aaa;margin:14px 0 4px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;font-family:-apple-system,sans-serif}
-main{margin-left:220px;padding:32px 48px;max-width:960px}
-section{margin-bottom:48px}
-section h2{font-size:22px;font-weight:400;margin-bottom:18px;padding-bottom:8px;border-bottom:1px solid #d5cec0;color:#4a3728;font-family:Georgia,serif}
-details.card{background:#fff;border:1px solid #e0dcd4;margin-bottom:12px;border-radius:0;overflow:hidden;transition:box-shadow .2s}
-details.card[open]{box-shadow:0 2px 12px rgba(0,0,0,.06);border-color:#c8bfad}
-summary.card-h{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:#fafaf7;cursor:pointer;user-select:none;border-bottom:1px solid #e0dcd4;list-style:none;font-family:Georgia,serif;font-size:15px}
-details[open] summary.card-h{border-bottom:1px solid #c8bfad;background:#f8f5ef}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;background:#fff;color:#1a1a1a;line-height:1.7}
+nav{position:fixed;top:0;left:0;width:200px;height:100vh;background:#f9fafb;color:#1a1a1a;padding:28px 16px;overflow-y:auto;z-index:100;border-right:1px solid #e5e7eb}
+nav h1{font-size:14px;font-weight:600;color:#1d4ed8;margin-bottom:2px}
+nav .sub{font-size:10px;color:#9ca3af;margin-bottom:18px}
+nav a{display:block;color:#6b7280;text-decoration:none;padding:3px 6px;border-radius:4px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .1s}
+nav a:hover{background:#eef2ff;color:#1d4ed8}
+nav .cat{font-size:9px;color:#9ca3af;margin:16px 0 4px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+main{margin-left:200px;padding:36px 56px;max-width:900px}
+section{margin-bottom:56px}
+section h2{font-size:24px;font-weight:700;margin-bottom:20px;padding-bottom:0;border-bottom:none;color:#111827;letter-spacing:-.3px}
+details.card{background:#fff;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:12px;overflow:hidden;transition:box-shadow .15s,border-color .15s}
+details.card:hover{border-color:#d1d5db}
+details.card[open]{box-shadow:0 4px 16px rgba(0,0,0,.06);border-color:#c7d2fe}
+summary.card-h{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;background:#fafafa;cursor:pointer;user-select:none;list-style:none;transition:background .1s}
+summary.card-h:hover{background:#f3f4f6}
+details[open] summary.card-h{background:#eef2ff;border-bottom:1px solid #c7d2fe}
 summary.card-h::-webkit-details-marker{display:none}
-summary.card-h h3{font-size:15px;font-weight:400;color:#2c2c2c;font-family:Georgia,serif}
-summary.card-h span{font-size:11px;color:#bbb;font-family:-apple-system,sans-serif}
-.card-b{padding:24px}
-.card-b img{max-width:100%;height:auto;border:1px solid #e8e4db;margin-bottom:16px}
-.desc{background:#fafaf7;padding:16px 20px;border-left:3px solid #8b4513;font-size:13px;color:#4a4a4a;margin-bottom:12px;line-height:1.8;font-family:"Noto Serif SC","Source Han Serif SC",Georgia,serif}
-.desc b{color:#2c2c2c;font-weight:600}
-.meta{display:flex;gap:18px;font-size:11px;color:#aaa;flex-wrap:wrap;font-family:-apple-system,sans-serif}
-.badge{display:inline-block;padding:3px 10px;border-radius:2px;font-size:10px;font-weight:500;font-family:-apple-system,sans-serif}
-.badge-s{background:#f0ebe0;color:#8b4513;border:1px solid #d5c9b3}
-.badge-u{background:#faf0f0;color:#a0522d;border:1px solid #e8d0c8}
-footer{text-align:center;padding:32px;color:#ccc;font-size:11px;font-family:Georgia,serif;font-style:italic}
-.model-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:12px}
-.model-grid img{width:100%}
-@media(max-width:900px){main{margin-left:0;padding:20px}nav{display:none}.model-grid{grid-template-columns:1fr}}
+summary.card-h h3{font-size:15px;font-weight:600;color:#111827;letter-spacing:-.2px}
+summary.card-h span{font-size:11px;color:#9ca3af}
+.card-b{padding:28px}
+.card-b img{max-width:100%;height:auto;border-radius:6px;border:1px solid #e5e7eb;margin-bottom:18px}
+.desc{background:#f9fafb;padding:18px 22px;border-radius:6px;font-size:13px;color:#374151;margin-bottom:12px;line-height:1.75}
+.desc b{color:#111827;font-weight:600}
+.meta{display:flex;gap:16px;font-size:11px;color:#6b7280;flex-wrap:wrap}
+.badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:500}
+.badge-s{background:#eef2ff;color:#1d4ed8}
+.badge-u{background:#fef2f2;color:#dc2626}
+footer{text-align:center;padding:32px;color:#d1d5db;font-size:11px}
+.model-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:12px}
+.model-grid img{width:100%;border-radius:4px}
+@media(max-width:800px){main{margin-left:0;padding:20px}nav{display:none}.model-grid{grid-template-columns:1fr}}
 </style></head>
 <body>
 <nav>
