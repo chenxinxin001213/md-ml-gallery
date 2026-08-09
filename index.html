@@ -37,6 +37,8 @@ footer{text-align:center;padding:32px;color:#d1d5db;font-size:11px}
 <nav>
 <h1>⚡ E-Field ML-MD</h1><div class="sub">9 Models · 103 Images</div>
 <div class="cat">核心发现</div><a href="#s1">📊 物理发现 + 机制</a>
+<div class="cat">消融实验</div><a href="#s1b">🧪 四变体对比</a>
+<div class="cat">跨Seed验证</div><a href="#s1c">🔄 中介 + 稳健性</a>
 <div class="cat">方法验证</div><a href="#s2">🔬 交叉验证 · PCA · UMAP</a>
 <div class="cat">SHAP 可解释性</div><a href="#s3">🎯 全模型 SHAP</a>
 <div class="cat">模型诊断</div><a href="#s4">📈 9 模型训练详情</a>
@@ -92,6 +94,88 @@ footer{text-align:center;padding:32px;color:#d1d5db;font-size:11px}
 <div class="desc"><b>元素</b>：移除每个特征后R²下降量。条越长=越不可替代。<br><b>核心故事</b>：与SHAP互补——SHAP说谁重要，消融说没有谁不行。</div>
 <div class="meta"><span class="badge badge-s">analysis.py → task_area_feature_ablation</span><span class="badge badge-u">特征必要性验证</span></div>
 </div></details></section>
+
+<section id="s1b"><h2>🧪 消融实验 — 四个变体对比</h2>
+
+<details class="card" id="cv_summary">
+<summary class="card-h"><h3>四变体 × 9 模型性能对比</h3><span>cv_cross_variant_summary.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/cv_cross_variant_summary.png" loading="lazy">
+<div class="desc"><b>核心故事</b>：2×2 消融设计（E_Field是否输入 × 是否加交互项）。四个变体的R²对比揭示：显式提供E_Field仅提升R²约0.001-0.004，加入交互项提升约0.002。电场效应已被结构描述符充分编码。</div>
+<div class="meta"><span class="badge badge-s">cross_variant_comparison.py</span><span class="badge badge-u">消融实验——电场间接作用的定量证据</span></div>
+</div></details>
+
+<details class="card" id="cv_fi">
+<summary class="card-h"><h3>特征重要性跨变体一致性</h3><span>cv_cross_variant_feature_importance.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/cv_cross_variant_feature_importance.png" loading="lazy">
+<div class="desc"><b>核心故事</b>：cos_theta_x和S_order在所有四个变体中一致排名Top-2。特征重要性不依赖输入策略——结论的模型独立性得到验证。</div>
+<div class="meta"><span class="badge badge-s">cross_variant_comparison.py</span><span class="badge badge-u">特征重要性跨变体稳定性</span></div>
+</div></details>
+
+<details class="card" id="cv_radar">
+<summary class="card-h"><h3>最佳模型雷达图</h3><span>cv_cross_variant_best_model_radar.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/cv_cross_variant_best_model_radar.png" loading="lazy">
+<div class="desc"><b>核心故事</b>：四个变体的最佳模型性能对比雷达图。全条件变体(with_E_interactions)的ExtraTrees最优，但四个变体差异很小。</div>
+<div class="meta"><span class="badge badge-s">cross_variant_comparison.py</span><span class="badge badge-u">最佳模型跨变体对比</span></div>
+</div></details>
+
+</section>
+
+
+<section id="s1c"><h2>🔄 跨 Seed 稳健性验证</h2>
+
+<details class="card" id="med_screening" open>
+<summary class="card-h"><h3>中介变量筛选（跨 Seed）</h3><span>med_mediation_screening.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/med_mediation_screening.png" loading="lazy">
+<div class="desc"><b>核心故事</b>：所有候选中介变量的间接效应估计+Bootstrap CI。S_order、HB、WW_Elec的跨seed效应最稳健。阴性对照(Erot_sym)在某些seed中显示假阳性——共线性警告。</div>
+<div class="meta"><span class="badge badge-s">mediation_analysis.py</span><span class="badge badge-u">中介筛选——跨seed汇总</span></div>
+</div></details>
+
+<details class="card" id="med_attenuation">
+<summary class="card-h"><h3>中介效应衰减</h3><span>med_mediation_attenuation.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/med_mediation_attenuation.png" loading="lazy">
+<div class="desc"><b>核心故事</b>：分层中介模型中E_Field系数的衰减。M0(E_Field only)→M1(+S_order)→M2(+HB/D_xy/能量项)。c''≈0——控制结构后，电场的直接效应消失。</div>
+<div class="meta"><span class="badge badge-s">mediation_analysis.py</span><span class="badge badge-u">中介衰减——分层模型的证据</span></div>
+</div></details>
+
+<details class="card" id="med_path">
+<summary class="card-h"><h3>中介路径图</h3><span>med_mediation_path_diagram.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/med_mediation_path_diagram.png" loading="lazy">
+<div class="desc"><b>核心故事</b>：完整因果路径 E_Field→L1(S_order)→L2(HB/D_xy/能量)→Area。路径系数标注a/b/c/c''。控制L1+L2后c''不显著。</div>
+<div class="meta"><span class="badge badge-s">mediation_analysis.py</span><span class="badge badge-u">因果路径可视化</span></div>
+</div></details>
+
+<details class="card" id="med_layered">
+<summary class="card-h"><h3>分层中介路径</h3><span>med_mediation_layered_path.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/med_mediation_layered_path.png" loading="lazy">
+<div class="desc"><b>核心故事</b>：L1(取向层)和L2(结构/动力学层)的分层因果结构。每一层的独立贡献和传递路径。</div>
+<div class="meta"><span class="badge badge-s">mediation_analysis.py</span><span class="badge badge-u">分层因果链</span></div>
+</div></details>
+
+<details class="card" id="med_rwa">
+<summary class="card-h"><h3>相对权重分析 (RWA)</h3><span>med_mediation_rwa.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/med_mediation_rwa.png" loading="lazy">
+<div class="desc"><b>核心故事</b>：在高共线体系(VIF>100)下，用RWA(Johnson 2000)替代个别β系数。前四个中介各占~20%，紧密聚集——定量证实没有一个变量单独支配。</div>
+<div class="meta"><span class="badge badge-s">mediation_analysis.py</span><span class="badge badge-u">共线体系下的变量重要性</span></div>
+</div></details>
+
+<details class="card" id="med_cross_dataset">
+<summary class="card-h"><h3>跨 Seed 中介对比</h3><span>med_cross_dataset_comparison.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/med_cross_dataset_comparison.png" loading="lazy">
+<div class="desc"><b>核心故事</b>：四组seed(original/20/56/3080)的c''系数、间接效应和中介比例对比。三组seed与完全中介假说一致，seed3080存在抑制效应需进一步分析。</div>
+<div class="meta"><span class="badge badge-s">mediation_analysis.py</span><span class="badge badge-u">跨seed中介稳健性</span></div>
+</div></details>
+
+</section>
+
 <section id="s2"><h2>🔬 多方法交叉验证</h2>
 <details class="card" open id="pca_full_analysis">
 <summary class="card-h"><h3>PCA 全分析</h3><span>pca_full_analysis.png ▸</span></summary>
