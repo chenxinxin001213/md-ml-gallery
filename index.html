@@ -1,18 +1,16 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!DOCTYPE html><html lang="zh-CN">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>E-Field ML-MD Analysis Gallery</title><style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;background:#fff;color:#1a1a1a;line-height:1.7}
-nav{position:fixed;top:0;left:0;width:200px;height:100vh;background:#f9fafb;color:#1a1a1a;padding:28px 16px;overflow-y:auto;z-index:100;border-right:1px solid #e5e7eb}
+<title>E-Field ML-MD — 导师汇报</title><style>*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;background:#fff;color:#1a1a1a;line-height:1.7}
+nav{position:fixed;top:0;left:0;width:210px;height:100vh;background:#f9fafb;color:#1a1a1a;padding:28px 14px;overflow-y:auto;z-index:100;border-right:1px solid #e5e7eb}
 nav h1{font-size:14px;font-weight:600;color:#1d4ed8;margin-bottom:2px}
 nav .sub{font-size:10px;color:#9ca3af;margin-bottom:18px}
-nav a{display:block;color:#6b7280;text-decoration:none;padding:3px 6px;border-radius:4px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .1s}
+nav a{display:block;color:#6b7280;text-decoration:none;padding:2px 6px;border-radius:4px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .1s}
 nav a:hover{background:#eef2ff;color:#1d4ed8}
-nav .cat{font-size:9px;color:#9ca3af;margin:16px 0 4px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
-main{margin-left:200px;padding:36px 56px;max-width:900px}
+nav .cat{font-size:9px;color:#9ca3af;margin:14px 0 3px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+main{margin-left:210px;padding:36px 56px;max-width:920px}
 section{margin-bottom:56px}
-section h2{font-size:24px;font-weight:700;margin-bottom:20px;padding-bottom:0;border-bottom:none;color:#111827;letter-spacing:-.3px}
+section h2{font-size:24px;font-weight:700;margin-bottom:20px;color:#111827;letter-spacing:-.3px}
 details.card{background:#fff;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:12px;overflow:hidden;transition:box-shadow .15s,border-color .15s}
 details.card:hover{border-color:#d1d5db}
 details.card[open]{box-shadow:0 4px 16px rgba(0,0,0,.06);border-color:#c7d2fe}
@@ -30,278 +28,188 @@ summary.card-h span{font-size:11px;color:#9ca3af}
 .badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:500}
 .badge-s{background:#eef2ff;color:#1d4ed8}
 .badge-u{background:#fef2f2;color:#dc2626}
+.warning-box{background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#92400e}
 footer{text-align:center;padding:32px;color:#d1d5db;font-size:11px}
 .model-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:12px}
 .model-grid img{width:100%;border-radius:4px}
 @media(max-width:800px){main{margin-left:0;padding:20px}nav{display:none}.model-grid{grid-template-columns:1fr}}
-</style></head>
-<body>
+</style></head><body>
 <nav>
-<h1>⚡ E-Field ML-MD</h1><div class="sub">103 images · with_E/output</div>
-<div class="cat">正文图</div>
-<a href="#fig">📊 Fig.1-11</a>
-<div class="cat">综合分析</div>
-<a href="#analysis">🔬 PCA · UMAP · Network</a>
-<div class="cat">SHAP</div>
-<a href="#shap">🎯 SHAP 可解释性</a>
-<div class="cat">模型性能</div>
-<a href="#models">📈 8 Models × ~8 plots</a>
+<h1>⚡ E-Field ML-MD</h1><div class="sub">9 Models · 103 Images</div>
+<div class="cat">核心发现</div><a href="#s1">📊 物理发现 + 机制</a>
+<div class="cat">方法验证</div><a href="#s2">🔬 交叉验证 · PCA · UMAP</a>
+<div class="cat">SHAP 可解释性</div><a href="#s3">🎯 全模型 SHAP</a>
+<div class="cat">模型诊断</div><a href="#s4">📈 9 模型训练详情</a>
+<div class="cat">内部验证（非正文）</div><a href="#s5">🔧 残差 · 调参 · 额外图</a>
 </nav><main>
-<section id="fig"><h2>📊 正文图 (Fig.1-11)</h2>
+<section id="s1"><h2>📊 核心物理发现 + 机制</h2>
 <details class="card" open id="Fig1_area_response_curve">
 <summary class="card-h"><h3>Fig.1: Area 响应曲线</h3><span>Fig1_area_response_curve.png ▸</span></summary>
 <div class="card-b">
 <img src="gallery_images/Fig1_area_response_curve.png" loading="lazy" alt="Fig.1: Area 响应曲线">
-<div class="desc"><b>坐标轴</b>：横轴=E_Field(0→1.0 V/Å)，纵轴=Mean_Area(nm²)。<br><b>元素</b>：蓝色散点=各电场下的平均面积(±95%CI误差棒)。深红曲线=Savitzky-Golay平滑。绿色虚竖线=Ec=0.205 V/Å。绿色带=Ec CI。灰色虚横线=饱和面积。<br><b>如何看懂</b>：曲线的S形态说明面积从增长→饱和。斜率最大的点≈Ec——电场驱动面积变化最剧烈处。CI带较窄→数据可信。饱和值≈23 nm²。<br><b>物理机制</b>：电场力偶矩τ=p×E驱动水偶极沿场方向取向。分子从趴着变站着→投影面积增大。Ec是取向有序化完成的临界电场。低于Ec热运动主导(无序)，高于Ec电场主导(有序)。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_area_response_curve</span><span class="badge badge-u">证明Ec的存在并展示电场驱动面积变化全貌</span></div>
+<div class="desc"><b>坐标轴</b>：横轴=E_Field(0→1.0 V/Å)，纵轴=Mean_Area(nm²)。<br><b>元素</b>：蓝色散点=各电场平均面积(±95%CI)。深红曲线=Savitzky-Golay平滑。绿色虚竖线=Ec=0.205 V/Å。绿带=Ec CI。灰色虚横线=饱和面积。<br><b>核心故事</b>：电场力偶矩 τ=p×E 驱动水偶极沿场方向取向。分子从"趴着"变"站着"→投影面积增大。Ec 是取向有序化完成的临界电场。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_area_response_curve</span><span class="badge badge-u">证明 Ec 的存在</span></div>
 </div></details><details class="card" id="FigS1_s_order_response">
-<summary class="card-h"><h3>Fig.2/S1: S_order 序参数响应</h3><span>FigS1_s_order_response.png ▸</span></summary>
+<summary class="card-h"><h3>Fig.2: S_order 序参数 — Ec 的物理定义</h3><span>FigS1_s_order_response.png ▸</span></summary>
 <div class="card-b">
-<img src="gallery_images/FigS1_s_order_response.png" loading="lazy" alt="Fig.2/S1: S_order 序参数响应">
-<div class="desc"><b>坐标轴</b>：横轴=E_Field，纵轴=S_order(-0.5→+0.5)。<br><b>元素</b>：蓝点=各电场S_order均值(±95%CI)。橙色样条曲线。绿色竖线=Ec。灰色横线=S_order=0(无序/有序分界)。<br><b>如何看懂</b>：S_order从负(无序)跨零变正(有序)。跨零点=Ec的物理定义——这不是人为阈值，而是序参数的自然零点。曲线形态展示从随机取向→有序排列的转变过程。<br><b>物理机制</b>：S_order=0.5(3cos²θ-1)，θ为水偶极与场方向夹角。θ=90°→S_order=-0.5(完全无序)，θ=0°→S_order=1.0(完全有序)。S_order=0对应θ≈54.74°——有序倾向与热运动刚好抵消的临界角。Legendre多项式P₂(cosθ)天然适合描述各向异性体系的取向序。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_s_order_response</span><span class="badge badge-u">Ec的物理定义——序参数跨零点自然标记无序/有序转变</span></div>
-</div></details><details class="card" id="Fig2_area_derivative">
-<summary class="card-h"><h3>Fig.S1a: Area 一阶导数</h3><span>Fig2_area_derivative.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/Fig2_area_derivative.png" loading="lazy" alt="Fig.S1a: Area 一阶导数">
-<div class="desc"><b>坐标轴</b>：横轴=E_Field，纵轴=dArea/dE(变化率)。<br><b>元素</b>：橙色点=各电场点的数值梯度。橙色曲线=平滑导数。绿色竖线=Ec。绿色带=Ec CI。灰色横线=0。<br><b>如何看懂</b>：导数在Ec附近达峰值→面积变化最快处=Ec。峰值尖锐=相变急促。如果平坦=渐变过程。<br><b>物理机制</b>：dArea/dE=系统对电场的瞬时响应速率。Ec处最大→取向有序化的完成是面积变化的瓶颈步骤。Ec之后取向饱和、进一步加场的影响减弱(导数回落)。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_area_derivative_curve</span><span class="badge badge-u">辅助定位Ec——导数峰值=相变最剧烈的电场区间</span></div>
+<img src="gallery_images/FigS1_s_order_response.png" loading="lazy" alt="Fig.2: S_order 序参数 — Ec 的物理定义">
+<div class="desc"><b>坐标轴</b>：横轴=E_Field，纵轴=S_order(-0.5→+0.5)。<br><b>核心故事</b>：S_order 从负(无序)跨零变正(有序)。跨零点=Ec的物理定义——不是人为阈值，是序参数的自然零点。S_order=0.5(3cos²θ-1)，θ从90°(无序)转到0°(有序)。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_s_order_response</span><span class="badge badge-u">Ec 的物理定义——序参数跨零点</span></div>
 </div></details><details class="card" id="Fig3_area_bootstrap_threshold">
 <summary class="card-h"><h3>Fig.3: Bootstrap Ec 分布</h3><span>Fig3_area_bootstrap_threshold.png ▸</span></summary>
 <div class="card-b">
 <img src="gallery_images/Fig3_area_bootstrap_threshold.png" loading="lazy" alt="Fig.3: Bootstrap Ec 分布">
-<div class="desc"><b>坐标轴</b>：横轴=Ec值(V/Å)，纵轴=频数/密度。<br><b>元素</b>：蓝色柱=1000次Bootstrap的Ec分布。橙色KDE曲线。绿色竖线=均值0.2047。半透明带=95%CI[0.2043,0.2051]。<br><b>如何看懂</b>：分布窄而高=Ec极其稳定。CI宽度仅0.0008→Ec估计到小数点后四位都可靠。CI不跨0→Ec统计显著。<br><b>物理机制</b>：Bootstrap模拟重做实验Ec会变多少。1000次重采样几乎不散→Ec不是特定数据划分的偶然产物，而是系统固有的物理性质。每次Bootstrap对E_Field组块重采样(保持组内结构)。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_area_bootstrap_threshold</span><span class="badge badge-u">Ec的统计置信度——1000次Bootstrap验证</span></div>
+<div class="desc"><b>元素</b>：1000次Bootstrap的Ec分布。均值=0.2047，95%CI=[0.2043,0.2051]。<br><b>核心故事</b>：CI宽度仅0.0008→Ec估计极其稳定，不是特定数据划分的偶然产物。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_area_bootstrap_threshold</span><span class="badge badge-u">Ec 统计置信度——1000次Bootstrap验证</span></div>
+</div></details><details class="card" id="Fig2_area_derivative">
+<summary class="card-h"><h3>Fig.S1a: Area 一阶导数</h3><span>Fig2_area_derivative.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/Fig2_area_derivative.png" loading="lazy" alt="Fig.S1a: Area 一阶导数">
+<div class="desc"><b>元素</b>：dArea/dE随电场变化。导数在Ec附近达峰值→面积变化最快处=Ec。<br><b>核心故事</b>：辅助验证Ec位置。峰值尖锐=相变急促。Ec之后取向饱和、导数回落。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_area_derivative_curve</span><span class="badge badge-u">辅助定位Ec——导数峰值</span></div>
+</div></details><details class="card" id="Fig10_shap_summary_enhanced">
+<summary class="card-h"><h3>Fig.5: SHAP Summary — 核心机制</h3><span>Fig10_shap_summary_enhanced.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/Fig10_shap_summary_enhanced.png" loading="lazy" alt="Fig.5: SHAP Summary — 核心机制">
+<div class="desc"><b>坐标轴</b>：横轴=SHAP值(正=推高Area,负=压低)。纵轴=特征按|SHAP|降序。<br><b>核心故事</b>：cos_theta_x(偶极取向)排第1，S_order排第2，SHAP值远超其余。E_Field本身SHAP≈0→电场不直接决定面积，而是通过改变取向/有序度间接作用。这个发现直接催生了中介分析。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_shap_summary_enhanced</span><span class="badge badge-u">核心发现——电场间接驱动，通过取向有序度</span></div>
+</div></details><details class="card" id="Fig11_area_mechanism_diagram">
+<summary class="card-h"><h3>Fig.11: 物理机制总览</h3><span>Fig11_area_mechanism_diagram.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/Fig11_area_mechanism_diagram.png" loading="lazy" alt="Fig.11: 物理机制总览">
+<div class="desc"><b>元素</b>：因果链 E_Field→τ=p×E→取向有序化→氢键重组→面积↑。<br><b>核心故事</b>：论文所有发现的视觉汇总。自下而上的多尺度因果链。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_area_mechanism_diagram</span><span class="badge badge-u">综合机制图——论文视觉总结</span></div>
 </div></details><details class="card" id="Fig4_area_correlation_heatmap">
 <summary class="card-h"><h3>Fig.4: 特征相关性热图</h3><span>Fig4_area_correlation_heatmap.png ▸</span></summary>
 <div class="card-b">
 <img src="gallery_images/Fig4_area_correlation_heatmap.png" loading="lazy" alt="Fig.4: 特征相关性热图">
-<div class="desc"><b>坐标轴</b>：横/纵轴=14个特征(Spearman相关矩阵)。<br><b>元素</b>：方格色=Spearman|r|(蓝正红负)，越深越强。标注r值+显著性星。<br><b>如何看懂</b>：找最深色off-diagonal格→cos_theta_x和S_order几乎全蓝(r>0.95)=强共线。找Mean_Area行/列→哪些特征与目标最强相关？<br><b>物理机制</b>：Spearman度量单调关系。cos_theta_x和S_order都是取向的表征——同一物理过程的两面，天然共线。热图确认了共线结构需要被正视。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_area_correlation_heatmap</span><span class="badge badge-u">特征工程验证——确认共线结构</span></div>
-</div></details><details class="card" id="Fig10_shap_summary_enhanced">
-<summary class="card-h"><h3>Fig.5/10: SHAP Summary (核心)</h3><span>Fig10_shap_summary_enhanced.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/Fig10_shap_summary_enhanced.png" loading="lazy" alt="Fig.5/10: SHAP Summary (核心)">
-<div class="desc"><b>坐标轴</b>：横轴=SHAP值(正=推高Area,负=压低Area)。纵轴=特征按平均|SHAP|降序。<br><b>元素</b>：每点=一个样本的SHAP值。红点=该特征取值高，蓝点=取值低。灰竖线=SHAP=0。<br><b>如何看懂</b>：最上面的特征最重要。红点集中右半=高特征值推高Area。蓝点集中左半=低特征值压低Area。如果红蓝混在一起无趋势=不重要。<br><b>核心发现</b>：cos_theta_x(偶极取向)排第1，S_order排第2，SHAP值远超其余。E_Field本身SHAP≈0→电场不直接决定面积，而是通过改变取向/有序度间接作用。这个发现直接催生了你的中介分析。<br><b>机制</b>：SHAP基于Shapley值(合作博弈论)。每个特征的SHAP=该特征在所有可能特征子集下的平均边际贡献。Beeswarm同时展示重要性(行序)、方向(横轴)、分布(点散布)、特征值(颜色)四个维度。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_shap_summary_enhanced</span><span class="badge badge-u">核心发现——电场通过结构中介变量间接驱动面积变化</span></div>
-</div></details><details class="card" id="Fig11_area_mechanism_diagram">
-<summary class="card-h"><h3>Fig.7/11: 物理机制示意图</h3><span>Fig11_area_mechanism_diagram.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/Fig11_area_mechanism_diagram.png" loading="lazy" alt="Fig.7/11: 物理机制示意图">
-<div class="desc"><b>元素</b>：流程图展示完整因果链：E_Field→τ=p×E(力偶矩)→取向有序化(cos_theta_x,S_order)→氢键重组(HB)→能量/扩散变化→液滴投影面积↑。<br><b>如何看懂</b>：沿箭头从左到右—这是因果链。每步有物理方程和SHAP证据。方框大小∝该步解释的方差比例。<br><b>物理机制</b>：电场通过经典电动力学力偶矩驱动偶极取向，取向变化通过氢键网络重组传递到宏观面积。自下而上的多尺度因果链——论文所有发现的视觉总结。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_area_mechanism_diagram</span><span class="badge badge-u">综合机制图——论文所有发现的视觉总结</span></div>
-</div></details><details class="card" id="Fig7_area_pdp">
-<summary class="card-h"><h3>Fig.7: PDP 部分依赖图</h3><span>Fig7_area_pdp.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/Fig7_area_pdp.png" loading="lazy" alt="Fig.7: PDP 部分依赖图">
-<div class="desc"><b>坐标轴</b>：每子图横轴=特征真实值，纵轴=模型预测的Area边际效应。<br><b>元素</b>：蓝色粗线=PDP均值(所有样本平均)。蓝色细线=ICE个体条件期望。红色虚线=均值线。<br><b>如何看懂</b>：PDP线平坦=无效应。有坡度=该特征独立影响预测。ICE线分散=不同样本间效应不同(存在交互)。<br><b>注意</b>：在cos_theta_x和S_order共线体系下，PDP可能产生虚假外推。ALE(Fig.8)更可信。但PDP和ALE的共同结论增强了鲁棒性。<br><b>机制</b>：PDP通过冻结其他特征、只变目标特征并取平均来估计边际效应。是模型无关的可解释性方法——与SHAP互补的第二套独立证据。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_area_pdp</span><span class="badge badge-u">模型无关的可解释性——与SHAP互补</span></div>
-</div></details><details class="card" id="Fig8_area_ale">
-<summary class="card-h"><h3>Fig.8: ALE 累积局部效应</h3><span>Fig8_area_ale.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/Fig8_area_ale.png" loading="lazy" alt="Fig.8: ALE 累积局部效应">
-<div class="desc"><b>坐标轴</b>：每子图横轴=特征真实值，纵轴=ALE(局部效应累积)。<br><b>元素</b>：蓝色粗线=ALE曲线。阴影=置信带。<br><b>如何看懂</b>：ALE斜率=该处边际效应。线平=无效应。线升=特征增大推高Area。<br><b>为什么比PDP更可信</b>：ALE只在模型实际见过的数据区域内计算局部效应并累积，避免了PDP的外推偏差。在共线体系下ALE是PDP的稳健替代。<br><b>机制</b>：ALE将特征值域分为小区间，在每个区间计算模型预测的局部变化再累积。与PDP的一致结论增强了cos_theta_x/S_order对Area有正向边际效应的可信度。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_area_ale</span><span class="badge badge-u">PDP的稳健替代——在共线体系下比PDP更可信</span></div>
+<div class="desc"><b>元素</b>：14个特征Spearman相关矩阵(蓝正红负)。<br><b>核心故事</b>：cos_theta_x和S_order强共线(r>0.95)——同一物理过程的两面，天然共线。确认共线结构需要被正视。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_area_correlation_heatmap</span><span class="badge badge-u">特征工程验证</span></div>
 </div></details><details class="card" id="Fig9_area_feature_ablation">
 <summary class="card-h"><h3>Fig.9: 特征消融</h3><span>Fig9_area_feature_ablation.png ▸</span></summary>
 <div class="card-b">
 <img src="gallery_images/Fig9_area_feature_ablation.png" loading="lazy" alt="Fig.9: 特征消融">
-<div class="desc"><b>坐标轴</b>：横轴=ΔR²(移除特征后R²下降量)，纵轴=特征(按ΔR²降序)。<br><b>元素</b>：蓝色横条=R²下降。条越长=移除该特征对模型损伤越大=该特征越不可替代。<br><b>如何看懂</b>：与SHAP对比——SHAP说谁重要，消融说没有谁不行。两者应高度一致。不一致→某特征SHAP高但消融低=有别的特征能替代它。<br><b>机制</b>：每次移除一个特征，重训模型，测量R²变化。模拟缺少某个观测量的情况下ML还能不能预测的物理实验。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_area_feature_ablation</span><span class="badge badge-u">特征必要性验证——不是重要而是不可替代</span></div>
+<div class="desc"><b>元素</b>：移除每个特征后R²下降量。条越长=越不可替代。<br><b>核心故事</b>：与SHAP互补——SHAP说谁重要，消融说没有谁不行。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_area_feature_ablation</span><span class="badge badge-u">特征必要性验证</span></div>
 </div></details></section>
-<section id="analysis"><h2>🔬 综合分析</h2>
+<section id="s2"><h2>🔬 多方法交叉验证</h2>
 <details class="card" open id="pca_full_analysis">
 <summary class="card-h"><h3>PCA 全分析</h3><span>pca_full_analysis.png ▸</span></summary>
 <div class="card-b">
 <img src="gallery_images/pca_full_analysis.png" loading="lazy" alt="PCA 全分析">
-<div class="desc"><b>四面板</b>：左上=PC1 vs PC2散点(色=E_Field)。右上=PC loading条(cos_theta_x最长)。左下=各PC解释方差(PC1=70.2%)。右下=Loading箭头(同向=正相关)。<br><b>如何看懂</b>：低场(紫)左上→高场(黄)右下沿PC1方向走=PC1分离了电场。cos_theta_x和S_order的loading最大=它们是PC1的主要贡献者——与SHAP完全一致。<br><b>机制</b>：PCA通过特征值分解协方差矩阵找方差最大方向。完全不依赖物理标注——纯线性代数。PCA与SHAP的一致发现构成了第三套独立交叉验证。</div>
+<div class="desc"><b>四面板</b>：PC1 vs PC2散点+loading+解释方差+loading箭头。<br><b>核心故事</b>：PC1解释70.2%方差，cos_theta_x/S_order loading最大——与SHAP完全一致。PCA完全不依赖物理标注，构成了第三套独立验证。</div>
 <div class="meta"><span class="badge badge-s">analysis.py → task_pca_full_analysis</span><span class="badge badge-u">第三套独立可解释性——PCA线性代数路线</span></div>
 </div></details><details class="card" id="umap_trajectory">
 <summary class="card-h"><h3>UMAP 状态演化轨迹</h3><span>umap_trajectory.png ▸</span></summary>
 <div class="card-b">
 <img src="gallery_images/umap_trajectory.png" loading="lazy" alt="UMAP 状态演化轨迹">
-<div class="desc"><b>坐标轴</b>：UMAP1(横)、UMAP2(纵)——高维特征的二维非线性投影。<br><b>元素</b>：彩色散点(色=E_Field,紫→黄)。灰线=按E_Field升序连接的轨迹。绿大圆=起点(E=0)、红方块=终点(E=1.0)。标注数字=关键电场值。<br><b>关键看点</b>：(1)点间距密集=状态变慢，稀疏/跳跃=状态突变。(2)灰线打弯=变化方向改变。(3)Ec附近(0.05~0.20)是否有转折/间距拉大？<br><b>机制</b>：UMAP是流形学习——保持局部邻居关系的非线性降维。与PCA(线性)不同。两者一致结论=更强的交叉验证(第四套)。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_umap_trajectory</span><span class="badge badge-u">第四套独立可解释性——UMAP流形学习路线</span></div>
+<div class="desc"><b>元素</b>：二维非线性投影。灰线=电场升序轨迹。绿圆=起点，红方=终点。<br><b>核心故事</b>：第四套独立验证——UMAP(非线性流形学习)与PCA(线性)的一致结论。Ec附近轨迹转折=相变信号。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_umap_trajectory</span><span class="badge badge-u">第四套独立可解释性——UMAP流形学习</span></div>
+</div></details><details class="card" id="model_performance_comparison">
+<summary class="card-h"><h3>模型性能对比 (9模型)</h3><span>model_performance_comparison.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/model_performance_comparison.png" loading="lazy" alt="模型性能对比 (9模型)">
+<div class="desc"><b>元素</b>：R²和RMSE的9模型对比。<br><b>核心故事</b>：从Ridge(线性)→SVR(核)→GPR(概率)→ExtraTrees(树)的R²梯度证明关系非线性。定性结论在所有模型中一致→模型无关的发现。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → 9模型汇总</span><span class="badge badge-u">多模型对比——证明非线性关系</span></div>
 </div></details><details class="card" id="correlation_network_upgraded">
 <summary class="card-h"><h3>相关性网络图</h3><span>correlation_network_upgraded.png ▸</span></summary>
 <div class="card-b">
 <img src="gallery_images/correlation_network_upgraded.png" loading="lazy" alt="相关性网络图">
-<div class="desc"><b>元素</b>：节点=特征(大小∝与Mean_Area的|r|)。连线=显著相关(FDR α=0.05,粗细∝|r|)。蓝色=正关,红色=负关。<br><b>如何看懂</b>：紧密聚集的子群=共线簇(如cos_theta_x,S_order,HB)。孤立节点=独立信息。Mean_Area与哪些节点连线最粗=最直接相关。<br><b>机制</b>：将高维相关矩阵可视化为图结构。Spring layout让紧密相关节点自然聚拢。网络图比热图更直观地揭示模块化结构。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_correlation_network_upgraded</span><span class="badge badge-u">相关结构的图可视化——揭示模块化特征簇</span></div>
+<div class="desc"><b>元素</b>：节点=特征(大小∝与Area的|r|)，连线=FDR显著。<br><b>核心故事</b>：cos_theta_x,S_order,HB形成紧密子群——同一物理过程的三个视角。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_correlation_network_upgraded</span><span class="badge badge-u">模块化结构可视化</span></div>
 </div></details><details class="card" id="state_evolution_heatmap">
 <summary class="card-h"><h3>状态演化热图</h3><span>state_evolution_heatmap.png ▸</span></summary>
 <div class="card-b">
 <img src="gallery_images/state_evolution_heatmap.png" loading="lazy" alt="状态演化热图">
-<div class="desc"><b>坐标轴</b>：横轴=E_Field(0→1.0)，纵轴=特征名。<br><b>元素</b>：格子色=Z-score(红=高于均值,蓝=低于均值,白=接近均值)。<br><b>如何看懂</b>：从左到右看，哪些特征先变色、哪些在Ec附近同时变色、哪些几乎不变。<br><b>机制</b>：Z-score=(原始值-全局均值)/全局标准差。在不同量纲的特征统一到同一尺度。热图是物理过程的快照时间线——揭示了各特征的响应先后顺序。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_state_evolution_heatmap</span><span class="badge badge-u">物理过程时间线——各特征对电场的响应时序</span></div>
-</div></details><details class="card" id="model_performance_comparison">
-<summary class="card-h"><h3>模型性能对比</h3><span>model_performance_comparison.png ▸</span></summary>
+<div class="desc"><b>元素</b>：各特征Z-score随电场变化。<br><b>核心故事</b>：物理过程的时间线——哪些特征先响应电场，哪些在Ec附近同步变化。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_state_evolution_heatmap</span><span class="badge badge-u">物理过程时序</span></div>
+</div></details><details class="card" id="Fig7_area_pdp">
+<summary class="card-h"><h3>PDP 部分依赖图</h3><span>Fig7_area_pdp.png ▸</span></summary>
 <div class="card-b">
-<img src="gallery_images/model_performance_comparison.png" loading="lazy" alt="模型性能对比">
-<div class="desc"><b>元素</b>：左=8模型R²对比。右=RMSE对比。条越长(R²高)=越准，条越短(RMSE低)=越准。<br><b>如何看懂</b>：ExtraTrees R²=0.985最优，Ridge R²=0.956最弱。从Ridge(线性)→SVR(核)→GPR(概率)→ExtraTrees(树)的梯度本身证明了关系非线性。<br><b>机制</b>：8模型的端到端基准测试。定性结论(cos_theta_x/S_order最重要)在所有模型中一致→模型无关的发现。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → 8模型汇总</span><span class="badge badge-u">多模型对比——证明非线性关系的存在</span></div>
+<img src="gallery_images/Fig7_area_pdp.png" loading="lazy" alt="PDP 部分依赖图">
+<div class="desc"><b>核心故事</b>：模型无关的可解释性——与SHAP互补的第二套证据。PDP展示特征对预测的边际效应。注意：共线体系下ALE(Fig.8)更可信。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_area_pdp</span><span class="badge badge-u">模型无关可解释性——与SHAP互补</span></div>
+</div></details><details class="card" id="Fig8_area_ale">
+<summary class="card-h"><h3>ALE 累积局部效应</h3><span>Fig8_area_ale.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/Fig8_area_ale.png" loading="lazy" alt="ALE 累积局部效应">
+<div class="desc"><b>核心故事</b>：ALE是PDP在共线体系下的稳健替代——只在数据实际出现的区域计算局部效应。与PDP一致结论增强可信度。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_area_ale</span><span class="badge badge-u">PDP稳健替代——共线体系下更可信</span></div>
 </div></details></section>
-<section id="shap"><h2>🎯 SHAP 可解释性</h2>
+<section id="s3"><h2>🎯 全模型 SHAP 可解释性</h2>
 <details class="card" open id="shap_dependence">
 <summary class="card-h"><h3>SHAP Dependence 系列</h3><span>shap_dependence.png ▸</span></summary>
 <div class="card-b">
 <img src="gallery_images/shap_dependence.png" loading="lazy" alt="SHAP Dependence 系列">
-<div class="desc"><b>如何看懂</b>：每个子图横轴=特征真实值，纵轴=SHAP值。每个点=一个样本，颜色=交互特征(自动选最强相关)。趋势线展示整体模式。<br><b>非线性检测</b>：SHAP随特征单调变=线性。S形=饱和(Langevin型)。U形=最优值存在。Ec附近是否突变？<br><b>机制</b>：SHAP dependence=SHAP summary的单特征放大版。展示了特征值→SHAP贡献的完整映射，同时通过颜色编码捕捉双特征交互。<br><b>包含特征</b>：cos_theta_x, HB, Mean_HB, D_xy, Water-Graphene_LJ, Water-Water_Elec等。</div>
-<div class="meta"><span class="badge badge-s">analysis.py</span><span class="badge badge-u">逐特征深入分析——效应形态与交互</span></div>
+<div class="desc"><b>核心故事</b>：逐特征放大——特征值→SHAP贡献的完整映射。颜色=交互特征。单调=线性，S形=饱和(Langevin型)，U形=最优值。<br><b>包含</b>：cos_theta_x, HB, Mean_HB, D_xy, Water-Graphene_LJ, Water-Water_Elec等。</div>
+<div class="meta"><span class="badge badge-s">analysis.py</span><span class="badge badge-u">逐特征深入——效应形态与交互</span></div>
 </div></details><details class="card" id="shap_all">
 <summary class="card-h"><h3>全部 SHAP 图 (16 张)</h3><span>shap_all.png ▸</span></summary>
 <div class="card-b">
 <img src="gallery_images/shap_all.png" loading="lazy" alt="全部 SHAP 图 (16 张)">
 <div class="desc"><div class="model-grid"><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Catboost Shap Low High</h4><img src="gallery_images/CatBoost_shap_low_high.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Catboost Shap Summary</h4><img src="gallery_images/CatBoost_shap_summary.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Extratrees Shap Low High</h4><img src="gallery_images/ExtraTrees_shap_low_high.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Extratrees Shap Summary</h4><img src="gallery_images/ExtraTrees_shap_summary.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Lightgbm Shap Low High</h4><img src="gallery_images/LightGBM_shap_low_high.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Lightgbm Shap Summary</h4><img src="gallery_images/LightGBM_shap_summary.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Rf Shap Low High</h4><img src="gallery_images/RF_shap_low_high.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Rf Shap Summary</h4><img src="gallery_images/RF_shap_summary.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Xgb Shap Low High</h4><img src="gallery_images/XGB_shap_low_high.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Xgb Shap Summary</h4><img src="gallery_images/XGB_shap_summary.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Dependence D Xy Å² Ps</h4><img src="gallery_images/shap_dependence_D_xy_Å²_ps.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Dependence Hb</h4><img src="gallery_images/shap_dependence_HB.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Dependence Mean Hb</h4><img src="gallery_images/shap_dependence_Mean_HB.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Dependence Water-Graphene Lj Kcal Mol</h4><img src="gallery_images/shap_dependence_Water-Graphene_LJ_kcal_mol.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Dependence Water-Water Elec Kcal Mol</h4><img src="gallery_images/shap_dependence_Water-Water_Elec_kcal_mol.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Dependence Cos Theta X</h4><img src="gallery_images/shap_dependence_cos_theta_x.png" loading="lazy"></div></div></div>
-<div class="meta"><span class="badge badge-s">models.py</span><span class="badge badge-u">各模型的SHAP summary+高低场对比</span></div>
+<div class="meta"><span class="badge badge-s">models.py</span><span class="badge badge-u">各模型SHAP summary+高低场对比</span></div>
 </div></details></section>
-<section id="models"><h2>📈 模型性能</h2>
+<section id="s4"><h2>📈 9 模型训练详情</h2>
 <details class="card" open id="model_CatBoost">
 <summary class="card-h"><h3>CatBoost — 全部诊断图 (10 张)</h3><span>▸</span></summary>
 <div class="card-b">
-<div class="desc"><b>通用读图指南</b><br>
-<b>CV箱线图：</b>每个箱子=一次CV的R²分布。箱体紧凑且高=稳定准确。<br>
-<b>误差vs电场：</b>横轴=电场值，纵轴=预测误差。理想：点均匀分布在零线上下。Ec附近误差变大=相变区域难预测。<br>
-<b>特征重要性(FI)：</b>条越长=模型认为越重要。注意这是内置FI不是SHAP，衡量训练时分裂了多少次。<br>
-<b>Pairplot：</b>对角=分布直方图。非对角=两两散点+Spearman r。看最后一列的特征-目标关系形态。<br>
-<b>超参热图：</b>格子颜色=R²(红高蓝低)。最深色=最优参数组合。<br>
-<b>学习曲线：</b>横轴=样本数，纵轴=R²。蓝=训练集，橙=验证集。两线收敛=无过拟合。<br>
-<b>残差直方图：</b>残差(预测-真实)的频数分布。理想：均值≈0、对称、无重尾。<br>
-<b>残差诊断四合一：</b>左上残差vs预测/右上Q-Q/左下直方图/右下标准化残差。四面板全方位检验模型假设。<br>
-<b>SHAP Summary：</b>每行=一个特征(按|SHAP|降序)。红点=高特征值，蓝点=低。横轴SHAP值(+推高Area,-压低)。<br>
-<b>SHAP高低场对比：</b>对比低场(E<0.1)vs高场(E>0.5)的特征排名变化=驱动作用的电场依赖性。<br>
-<b>SHAP Dependence：</b>横轴=特征值，纵轴=SHAP贡献。颜色=交互特征。单调=线性，S形=饱和，U形=最优值。<br>
-</div>
+<div class="desc"><b>通用读图指南</b>：CV箱线=模型稳定性。误差vs电场=是否存在电场依赖系统偏差。特征重要性(FI)=树模型方差减少排名(非SHAP)。Pairplot=特征-目标关系全景。超参热图=GridSearch搜索空间。学习曲线=训练/验证收敛性。残差=模型假设检验。SHAP Summary=特征对预测的边际贡献(红高蓝低)。</div>
 <div class="model-grid">
 <div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Boxplot</h4><img src="gallery_images/CatBoost_cv_boxplot.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Error By Efield</h4><img src="gallery_images/CatBoost_error_by_efield.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Importance</h4><img src="gallery_images/CatBoost_feature_importance.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Target</h4><img src="gallery_images/CatBoost_feature_target.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Grid Heatmap</h4><img src="gallery_images/CatBoost_grid_heatmap.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Learning Curve</h4><img src="gallery_images/CatBoost_learning_curve.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals</h4><img src="gallery_images/CatBoost_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals Hist</h4><img src="gallery_images/CatBoost_residuals_hist.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Low High</h4><img src="gallery_images/CatBoost_shap_low_high.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Summary</h4><img src="gallery_images/CatBoost_shap_summary.png" loading="lazy"></div>
 </div></div></details><details class="card" id="model_XGB">
 <summary class="card-h"><h3>XGB — 全部诊断图 (10 张)</h3><span>▸</span></summary>
 <div class="card-b">
-<div class="desc"><b>通用读图指南</b><br>
-<b>CV箱线图：</b>每个箱子=一次CV的R²分布。箱体紧凑且高=稳定准确。<br>
-<b>误差vs电场：</b>横轴=电场值，纵轴=预测误差。理想：点均匀分布在零线上下。Ec附近误差变大=相变区域难预测。<br>
-<b>特征重要性(FI)：</b>条越长=模型认为越重要。注意这是内置FI不是SHAP，衡量训练时分裂了多少次。<br>
-<b>Pairplot：</b>对角=分布直方图。非对角=两两散点+Spearman r。看最后一列的特征-目标关系形态。<br>
-<b>超参热图：</b>格子颜色=R²(红高蓝低)。最深色=最优参数组合。<br>
-<b>学习曲线：</b>横轴=样本数，纵轴=R²。蓝=训练集，橙=验证集。两线收敛=无过拟合。<br>
-<b>残差直方图：</b>残差(预测-真实)的频数分布。理想：均值≈0、对称、无重尾。<br>
-<b>残差诊断四合一：</b>左上残差vs预测/右上Q-Q/左下直方图/右下标准化残差。四面板全方位检验模型假设。<br>
-<b>SHAP Summary：</b>每行=一个特征(按|SHAP|降序)。红点=高特征值，蓝点=低。横轴SHAP值(+推高Area,-压低)。<br>
-<b>SHAP高低场对比：</b>对比低场(E<0.1)vs高场(E>0.5)的特征排名变化=驱动作用的电场依赖性。<br>
-<b>SHAP Dependence：</b>横轴=特征值，纵轴=SHAP贡献。颜色=交互特征。单调=线性，S形=饱和，U形=最优值。<br>
-</div>
+<div class="desc"><b>通用读图指南</b>：CV箱线=模型稳定性。误差vs电场=是否存在电场依赖系统偏差。特征重要性(FI)=树模型方差减少排名(非SHAP)。Pairplot=特征-目标关系全景。超参热图=GridSearch搜索空间。学习曲线=训练/验证收敛性。残差=模型假设检验。SHAP Summary=特征对预测的边际贡献(红高蓝低)。</div>
 <div class="model-grid">
 <div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Boxplot</h4><img src="gallery_images/XGB_cv_boxplot.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Error By Efield</h4><img src="gallery_images/XGB_error_by_efield.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Importance</h4><img src="gallery_images/XGB_feature_importance.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Target</h4><img src="gallery_images/XGB_feature_target.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Grid Heatmap</h4><img src="gallery_images/XGB_grid_heatmap.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Learning Curve</h4><img src="gallery_images/XGB_learning_curve.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals</h4><img src="gallery_images/XGB_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals Hist</h4><img src="gallery_images/XGB_residuals_hist.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Low High</h4><img src="gallery_images/XGB_shap_low_high.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Summary</h4><img src="gallery_images/XGB_shap_summary.png" loading="lazy"></div>
 </div></div></details><details class="card" id="model_LightGBM">
 <summary class="card-h"><h3>LightGBM — 全部诊断图 (10 张)</h3><span>▸</span></summary>
 <div class="card-b">
-<div class="desc"><b>通用读图指南</b><br>
-<b>CV箱线图：</b>每个箱子=一次CV的R²分布。箱体紧凑且高=稳定准确。<br>
-<b>误差vs电场：</b>横轴=电场值，纵轴=预测误差。理想：点均匀分布在零线上下。Ec附近误差变大=相变区域难预测。<br>
-<b>特征重要性(FI)：</b>条越长=模型认为越重要。注意这是内置FI不是SHAP，衡量训练时分裂了多少次。<br>
-<b>Pairplot：</b>对角=分布直方图。非对角=两两散点+Spearman r。看最后一列的特征-目标关系形态。<br>
-<b>超参热图：</b>格子颜色=R²(红高蓝低)。最深色=最优参数组合。<br>
-<b>学习曲线：</b>横轴=样本数，纵轴=R²。蓝=训练集，橙=验证集。两线收敛=无过拟合。<br>
-<b>残差直方图：</b>残差(预测-真实)的频数分布。理想：均值≈0、对称、无重尾。<br>
-<b>残差诊断四合一：</b>左上残差vs预测/右上Q-Q/左下直方图/右下标准化残差。四面板全方位检验模型假设。<br>
-<b>SHAP Summary：</b>每行=一个特征(按|SHAP|降序)。红点=高特征值，蓝点=低。横轴SHAP值(+推高Area,-压低)。<br>
-<b>SHAP高低场对比：</b>对比低场(E<0.1)vs高场(E>0.5)的特征排名变化=驱动作用的电场依赖性。<br>
-<b>SHAP Dependence：</b>横轴=特征值，纵轴=SHAP贡献。颜色=交互特征。单调=线性，S形=饱和，U形=最优值。<br>
-</div>
+<div class="desc"><b>通用读图指南</b>：CV箱线=模型稳定性。误差vs电场=是否存在电场依赖系统偏差。特征重要性(FI)=树模型方差减少排名(非SHAP)。Pairplot=特征-目标关系全景。超参热图=GridSearch搜索空间。学习曲线=训练/验证收敛性。残差=模型假设检验。SHAP Summary=特征对预测的边际贡献(红高蓝低)。</div>
 <div class="model-grid">
 <div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Boxplot</h4><img src="gallery_images/LightGBM_cv_boxplot.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Error By Efield</h4><img src="gallery_images/LightGBM_error_by_efield.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Importance</h4><img src="gallery_images/LightGBM_feature_importance.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Target</h4><img src="gallery_images/LightGBM_feature_target.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Grid Heatmap</h4><img src="gallery_images/LightGBM_grid_heatmap.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Learning Curve</h4><img src="gallery_images/LightGBM_learning_curve.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals</h4><img src="gallery_images/LightGBM_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals Hist</h4><img src="gallery_images/LightGBM_residuals_hist.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Low High</h4><img src="gallery_images/LightGBM_shap_low_high.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Summary</h4><img src="gallery_images/LightGBM_shap_summary.png" loading="lazy"></div>
 </div></div></details><details class="card" id="model_ExtraTrees">
 <summary class="card-h"><h3>ExtraTrees — 全部诊断图 (10 张)</h3><span>▸</span></summary>
 <div class="card-b">
-<div class="desc"><b>通用读图指南</b><br>
-<b>CV箱线图：</b>每个箱子=一次CV的R²分布。箱体紧凑且高=稳定准确。<br>
-<b>误差vs电场：</b>横轴=电场值，纵轴=预测误差。理想：点均匀分布在零线上下。Ec附近误差变大=相变区域难预测。<br>
-<b>特征重要性(FI)：</b>条越长=模型认为越重要。注意这是内置FI不是SHAP，衡量训练时分裂了多少次。<br>
-<b>Pairplot：</b>对角=分布直方图。非对角=两两散点+Spearman r。看最后一列的特征-目标关系形态。<br>
-<b>超参热图：</b>格子颜色=R²(红高蓝低)。最深色=最优参数组合。<br>
-<b>学习曲线：</b>横轴=样本数，纵轴=R²。蓝=训练集，橙=验证集。两线收敛=无过拟合。<br>
-<b>残差直方图：</b>残差(预测-真实)的频数分布。理想：均值≈0、对称、无重尾。<br>
-<b>残差诊断四合一：</b>左上残差vs预测/右上Q-Q/左下直方图/右下标准化残差。四面板全方位检验模型假设。<br>
-<b>SHAP Summary：</b>每行=一个特征(按|SHAP|降序)。红点=高特征值，蓝点=低。横轴SHAP值(+推高Area,-压低)。<br>
-<b>SHAP高低场对比：</b>对比低场(E<0.1)vs高场(E>0.5)的特征排名变化=驱动作用的电场依赖性。<br>
-<b>SHAP Dependence：</b>横轴=特征值，纵轴=SHAP贡献。颜色=交互特征。单调=线性，S形=饱和，U形=最优值。<br>
-</div>
+<div class="desc"><b>通用读图指南</b>：CV箱线=模型稳定性。误差vs电场=是否存在电场依赖系统偏差。特征重要性(FI)=树模型方差减少排名(非SHAP)。Pairplot=特征-目标关系全景。超参热图=GridSearch搜索空间。学习曲线=训练/验证收敛性。残差=模型假设检验。SHAP Summary=特征对预测的边际贡献(红高蓝低)。</div>
 <div class="model-grid">
 <div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Boxplot</h4><img src="gallery_images/ExtraTrees_cv_boxplot.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Error By Efield</h4><img src="gallery_images/ExtraTrees_error_by_efield.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Importance</h4><img src="gallery_images/ExtraTrees_feature_importance.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Target</h4><img src="gallery_images/ExtraTrees_feature_target.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Grid Heatmap</h4><img src="gallery_images/ExtraTrees_grid_heatmap.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Learning Curve</h4><img src="gallery_images/ExtraTrees_learning_curve.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals</h4><img src="gallery_images/ExtraTrees_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals Hist</h4><img src="gallery_images/ExtraTrees_residuals_hist.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Low High</h4><img src="gallery_images/ExtraTrees_shap_low_high.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Summary</h4><img src="gallery_images/ExtraTrees_shap_summary.png" loading="lazy"></div>
 </div></div></details><details class="card" id="model_RF">
 <summary class="card-h"><h3>RF — 全部诊断图 (10 张)</h3><span>▸</span></summary>
 <div class="card-b">
-<div class="desc"><b>通用读图指南</b><br>
-<b>CV箱线图：</b>每个箱子=一次CV的R²分布。箱体紧凑且高=稳定准确。<br>
-<b>误差vs电场：</b>横轴=电场值，纵轴=预测误差。理想：点均匀分布在零线上下。Ec附近误差变大=相变区域难预测。<br>
-<b>特征重要性(FI)：</b>条越长=模型认为越重要。注意这是内置FI不是SHAP，衡量训练时分裂了多少次。<br>
-<b>Pairplot：</b>对角=分布直方图。非对角=两两散点+Spearman r。看最后一列的特征-目标关系形态。<br>
-<b>超参热图：</b>格子颜色=R²(红高蓝低)。最深色=最优参数组合。<br>
-<b>学习曲线：</b>横轴=样本数，纵轴=R²。蓝=训练集，橙=验证集。两线收敛=无过拟合。<br>
-<b>残差直方图：</b>残差(预测-真实)的频数分布。理想：均值≈0、对称、无重尾。<br>
-<b>残差诊断四合一：</b>左上残差vs预测/右上Q-Q/左下直方图/右下标准化残差。四面板全方位检验模型假设。<br>
-<b>SHAP Summary：</b>每行=一个特征(按|SHAP|降序)。红点=高特征值，蓝点=低。横轴SHAP值(+推高Area,-压低)。<br>
-<b>SHAP高低场对比：</b>对比低场(E<0.1)vs高场(E>0.5)的特征排名变化=驱动作用的电场依赖性。<br>
-<b>SHAP Dependence：</b>横轴=特征值，纵轴=SHAP贡献。颜色=交互特征。单调=线性，S形=饱和，U形=最优值。<br>
-</div>
+<div class="desc"><b>通用读图指南</b>：CV箱线=模型稳定性。误差vs电场=是否存在电场依赖系统偏差。特征重要性(FI)=树模型方差减少排名(非SHAP)。Pairplot=特征-目标关系全景。超参热图=GridSearch搜索空间。学习曲线=训练/验证收敛性。残差=模型假设检验。SHAP Summary=特征对预测的边际贡献(红高蓝低)。</div>
 <div class="model-grid">
 <div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Boxplot</h4><img src="gallery_images/RF_cv_boxplot.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Error By Efield</h4><img src="gallery_images/RF_error_by_efield.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Importance</h4><img src="gallery_images/RF_feature_importance.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Target</h4><img src="gallery_images/RF_feature_target.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Grid Heatmap</h4><img src="gallery_images/RF_grid_heatmap.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Learning Curve</h4><img src="gallery_images/RF_learning_curve.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals</h4><img src="gallery_images/RF_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals Hist</h4><img src="gallery_images/RF_residuals_hist.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Low High</h4><img src="gallery_images/RF_shap_low_high.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Summary</h4><img src="gallery_images/RF_shap_summary.png" loading="lazy"></div>
 </div></div></details><details class="card" id="model_GPR">
 <summary class="card-h"><h3>GPR — 全部诊断图 (6 张)</h3><span>▸</span></summary>
 <div class="card-b">
-<div class="desc"><b>通用读图指南</b><br>
-<b>CV箱线图：</b>每个箱子=一次CV的R²分布。箱体紧凑且高=稳定准确。<br>
-<b>误差vs电场：</b>横轴=电场值，纵轴=预测误差。理想：点均匀分布在零线上下。Ec附近误差变大=相变区域难预测。<br>
-<b>特征重要性(FI)：</b>条越长=模型认为越重要。注意这是内置FI不是SHAP，衡量训练时分裂了多少次。<br>
-<b>Pairplot：</b>对角=分布直方图。非对角=两两散点+Spearman r。看最后一列的特征-目标关系形态。<br>
-<b>超参热图：</b>格子颜色=R²(红高蓝低)。最深色=最优参数组合。<br>
-<b>学习曲线：</b>横轴=样本数，纵轴=R²。蓝=训练集，橙=验证集。两线收敛=无过拟合。<br>
-<b>残差直方图：</b>残差(预测-真实)的频数分布。理想：均值≈0、对称、无重尾。<br>
-<b>残差诊断四合一：</b>左上残差vs预测/右上Q-Q/左下直方图/右下标准化残差。四面板全方位检验模型假设。<br>
-<b>SHAP Summary：</b>每行=一个特征(按|SHAP|降序)。红点=高特征值，蓝点=低。横轴SHAP值(+推高Area,-压低)。<br>
-<b>SHAP高低场对比：</b>对比低场(E<0.1)vs高场(E>0.5)的特征排名变化=驱动作用的电场依赖性。<br>
-<b>SHAP Dependence：</b>横轴=特征值，纵轴=SHAP贡献。颜色=交互特征。单调=线性，S形=饱和，U形=最优值。<br>
-</div>
+<div class="desc"><b>通用读图指南</b>：CV箱线=模型稳定性。误差vs电场=是否存在电场依赖系统偏差。特征重要性(FI)=树模型方差减少排名(非SHAP)。Pairplot=特征-目标关系全景。超参热图=GridSearch搜索空间。学习曲线=训练/验证收敛性。残差=模型假设检验。SHAP Summary=特征对预测的边际贡献(红高蓝低)。</div>
 <div class="model-grid">
 <div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Boxplot</h4><img src="gallery_images/GPR_cv_boxplot.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Error By Efield</h4><img src="gallery_images/GPR_error_by_efield.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Importance</h4><img src="gallery_images/GPR_feature_importance.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Gpr Uncertainty</h4><img src="gallery_images/GPR_gpr_uncertainty.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals</h4><img src="gallery_images/GPR_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals Hist</h4><img src="gallery_images/GPR_residuals_hist.png" loading="lazy"></div>
 </div></div></details><details class="card" id="model_SVR">
 <summary class="card-h"><h3>SVR — 全部诊断图 (7 张)</h3><span>▸</span></summary>
 <div class="card-b">
-<div class="desc"><b>通用读图指南</b><br>
-<b>CV箱线图：</b>每个箱子=一次CV的R²分布。箱体紧凑且高=稳定准确。<br>
-<b>误差vs电场：</b>横轴=电场值，纵轴=预测误差。理想：点均匀分布在零线上下。Ec附近误差变大=相变区域难预测。<br>
-<b>特征重要性(FI)：</b>条越长=模型认为越重要。注意这是内置FI不是SHAP，衡量训练时分裂了多少次。<br>
-<b>Pairplot：</b>对角=分布直方图。非对角=两两散点+Spearman r。看最后一列的特征-目标关系形态。<br>
-<b>超参热图：</b>格子颜色=R²(红高蓝低)。最深色=最优参数组合。<br>
-<b>学习曲线：</b>横轴=样本数，纵轴=R²。蓝=训练集，橙=验证集。两线收敛=无过拟合。<br>
-<b>残差直方图：</b>残差(预测-真实)的频数分布。理想：均值≈0、对称、无重尾。<br>
-<b>残差诊断四合一：</b>左上残差vs预测/右上Q-Q/左下直方图/右下标准化残差。四面板全方位检验模型假设。<br>
-<b>SHAP Summary：</b>每行=一个特征(按|SHAP|降序)。红点=高特征值，蓝点=低。横轴SHAP值(+推高Area,-压低)。<br>
-<b>SHAP高低场对比：</b>对比低场(E<0.1)vs高场(E>0.5)的特征排名变化=驱动作用的电场依赖性。<br>
-<b>SHAP Dependence：</b>横轴=特征值，纵轴=SHAP贡献。颜色=交互特征。单调=线性，S形=饱和，U形=最优值。<br>
-</div>
+<div class="desc"><b>通用读图指南</b>：CV箱线=模型稳定性。误差vs电场=是否存在电场依赖系统偏差。特征重要性(FI)=树模型方差减少排名(非SHAP)。Pairplot=特征-目标关系全景。超参热图=GridSearch搜索空间。学习曲线=训练/验证收敛性。残差=模型假设检验。SHAP Summary=特征对预测的边际贡献(红高蓝低)。</div>
 <div class="model-grid">
 <div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Boxplot</h4><img src="gallery_images/SVR_cv_boxplot.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Error By Efield</h4><img src="gallery_images/SVR_error_by_efield.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Importance</h4><img src="gallery_images/SVR_feature_importance.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Target</h4><img src="gallery_images/SVR_feature_target.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Grid Heatmap</h4><img src="gallery_images/SVR_grid_heatmap.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals</h4><img src="gallery_images/SVR_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals Hist</h4><img src="gallery_images/SVR_residuals_hist.png" loading="lazy"></div>
 </div></div></details><details class="card" id="model_Ridge">
 <summary class="card-h"><h3>Ridge — 全部诊断图 (5 张)</h3><span>▸</span></summary>
 <div class="card-b">
-<div class="desc"><b>通用读图指南</b><br>
-<b>CV箱线图：</b>每个箱子=一次CV的R²分布。箱体紧凑且高=稳定准确。<br>
-<b>误差vs电场：</b>横轴=电场值，纵轴=预测误差。理想：点均匀分布在零线上下。Ec附近误差变大=相变区域难预测。<br>
-<b>特征重要性(FI)：</b>条越长=模型认为越重要。注意这是内置FI不是SHAP，衡量训练时分裂了多少次。<br>
-<b>Pairplot：</b>对角=分布直方图。非对角=两两散点+Spearman r。看最后一列的特征-目标关系形态。<br>
-<b>超参热图：</b>格子颜色=R²(红高蓝低)。最深色=最优参数组合。<br>
-<b>学习曲线：</b>横轴=样本数，纵轴=R²。蓝=训练集，橙=验证集。两线收敛=无过拟合。<br>
-<b>残差直方图：</b>残差(预测-真实)的频数分布。理想：均值≈0、对称、无重尾。<br>
-<b>残差诊断四合一：</b>左上残差vs预测/右上Q-Q/左下直方图/右下标准化残差。四面板全方位检验模型假设。<br>
-<b>SHAP Summary：</b>每行=一个特征(按|SHAP|降序)。红点=高特征值，蓝点=低。横轴SHAP值(+推高Area,-压低)。<br>
-<b>SHAP高低场对比：</b>对比低场(E<0.1)vs高场(E>0.5)的特征排名变化=驱动作用的电场依赖性。<br>
-<b>SHAP Dependence：</b>横轴=特征值，纵轴=SHAP贡献。颜色=交互特征。单调=线性，S形=饱和，U形=最优值。<br>
-</div>
+<div class="desc"><b>通用读图指南</b>：CV箱线=模型稳定性。误差vs电场=是否存在电场依赖系统偏差。特征重要性(FI)=树模型方差减少排名(非SHAP)。Pairplot=特征-目标关系全景。超参热图=GridSearch搜索空间。学习曲线=训练/验证收敛性。残差=模型假设检验。SHAP Summary=特征对预测的边际贡献(红高蓝低)。</div>
 <div class="model-grid">
 <div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Boxplot</h4><img src="gallery_images/Ridge_cv_boxplot.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Error By Efield</h4><img src="gallery_images/Ridge_error_by_efield.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Importance</h4><img src="gallery_images/Ridge_feature_importance.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals</h4><img src="gallery_images/Ridge_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals Hist</h4><img src="gallery_images/Ridge_residuals_hist.png" loading="lazy"></div>
+</div></div></details><details class="card" id="model_EBM">
+<summary class="card-h"><h3>EBM — 全部诊断图 (5 张)</h3><span>▸</span></summary>
+<div class="card-b">
+<div class="desc"><b>通用读图指南</b>：CV箱线=模型稳定性。误差vs电场=是否存在电场依赖系统偏差。特征重要性(FI)=树模型方差减少排名(非SHAP)。Pairplot=特征-目标关系全景。超参热图=GridSearch搜索空间。学习曲线=训练/验证收敛性。残差=模型假设检验。SHAP Summary=特征对预测的边际贡献(红高蓝低)。</div>
+<div class="model-grid">
+<div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Boxplot</h4><img src="gallery_images/EBM_cv_boxplot.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Error By Efield</h4><img src="gallery_images/EBM_error_by_efield.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Learning Curve</h4><img src="gallery_images/EBM_learning_curve.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals</h4><img src="gallery_images/EBM_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals Hist</h4><img src="gallery_images/EBM_residuals_hist.png" loading="lazy"></div>
 </div></div></details></section>
-<footer>Generated from with_E/output · 103 images · E-Field ML-MD Analysis Gallery</footer>
+<section id="s5"><h2>🔧 内部验证（非正文图表）</h2>
+<div class="warning-box">⚠️ 以下为模型训练过程中的诊断图表（学习曲线、超参搜索、残差分析等），用于内部验证模型质量和调参决策，不纳入论文正文或 SI。</div>
+<div class="model-grid"><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig5 Shap Dependence Individual</h4><img src="gallery_images/Fig5_shap_dependence_individual.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig6 Shap Interaction</h4><img src="gallery_images/Fig6_shap_interaction.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig 3D Response Surface</h4><img src="gallery_images/Fig_3d_response_surface.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig Cross Model Residuals</h4><img src="gallery_images/Fig_cross_model_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig Feature Importance Consensus</h4><img src="gallery_images/Fig_feature_importance_consensus.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig Learning Curve 3X3</h4><img src="gallery_images/Fig_learning_curve_3x3.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig Response 2D</h4><img src="gallery_images/Fig_response_2d.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig S Order Violin</h4><img src="gallery_images/Fig_s_order_violin.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Style Example</h4><img src="gallery_images/style_example.png" loading="lazy"></div></div></section>
+<footer>E-Field ML-MD Analysis Gallery · 9 Models · 103 Images · 导师汇报版</footer>
 </main>
 </body>
 </html>
