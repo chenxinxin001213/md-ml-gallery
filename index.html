@@ -37,8 +37,6 @@ footer{text-align:center;padding:32px;color:#d1d5db;font-size:11px}
 <nav>
 <h1>⚡ E-Field ML-MD</h1><div class="sub">9 Models · 103 Images</div>
 <div class="cat">核心发现</div><a href="#s1">📊 物理发现 + 机制</a>
-<div class="cat">消融实验</div><a href="#s1b">🧪 四变体对比</a>
-<div class="cat">跨Seed验证</div><a href="#s1c">🔄 中介 + 稳健性</a>
 <div class="cat">方法验证</div><a href="#s2">🔬 交叉验证 · PCA · UMAP</a>
 <div class="cat">SHAP 可解释性</div><a href="#s3">🎯 全模型 SHAP</a>
 <div class="cat">模型诊断</div><a href="#s4">📈 9 模型训练详情</a>
@@ -94,88 +92,6 @@ footer{text-align:center;padding:32px;color:#d1d5db;font-size:11px}
 <div class="desc"><b>元素</b>：移除每个特征后R²下降量。条越长=越不可替代。<br><b>核心故事</b>：与SHAP互补——SHAP说谁重要，消融说没有谁不行。</div>
 <div class="meta"><span class="badge badge-s">analysis.py → task_area_feature_ablation</span><span class="badge badge-u">特征必要性验证</span></div>
 </div></details></section>
-
-<section id="s1b"><h2>🧪 消融实验 — 四个变体对比</h2>
-
-<details class="card" id="cv_summary">
-<summary class="card-h"><h3>四变体 × 9 模型性能对比</h3><span>cv_cross_variant_summary.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/cv_cross_variant_summary.png" loading="lazy">
-<div class="desc"><b>核心故事</b>：2×2 消融设计（E_Field是否输入 × 是否加交互项）。四个变体的R²对比揭示：显式提供E_Field仅提升R²约0.001-0.004，加入交互项提升约0.002。电场效应已被结构描述符充分编码。</div>
-<div class="meta"><span class="badge badge-s">cross_variant_comparison.py</span><span class="badge badge-u">消融实验——电场间接作用的定量证据</span></div>
-</div></details>
-
-<details class="card" id="cv_fi">
-<summary class="card-h"><h3>特征重要性跨变体一致性</h3><span>cv_cross_variant_feature_importance.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/cv_cross_variant_feature_importance.png" loading="lazy">
-<div class="desc"><b>核心故事</b>：cos_theta_x和S_order在所有四个变体中一致排名Top-2。特征重要性不依赖输入策略——结论的模型独立性得到验证。</div>
-<div class="meta"><span class="badge badge-s">cross_variant_comparison.py</span><span class="badge badge-u">特征重要性跨变体稳定性</span></div>
-</div></details>
-
-<details class="card" id="cv_radar">
-<summary class="card-h"><h3>最佳模型雷达图</h3><span>cv_cross_variant_best_model_radar.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/cv_cross_variant_best_model_radar.png" loading="lazy">
-<div class="desc"><b>核心故事</b>：四个变体的最佳模型性能对比雷达图。全条件变体(with_E_interactions)的ExtraTrees最优，但四个变体差异很小。</div>
-<div class="meta"><span class="badge badge-s">cross_variant_comparison.py</span><span class="badge badge-u">最佳模型跨变体对比</span></div>
-</div></details>
-
-</section>
-
-
-<section id="s1c"><h2>🔄 跨 Seed 稳健性验证</h2>
-
-<details class="card" id="med_screening" open>
-<summary class="card-h"><h3>中介变量筛选（跨 Seed）</h3><span>med_mediation_screening.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/med_mediation_screening.png" loading="lazy">
-<div class="desc"><b>核心故事</b>：所有候选中介变量的间接效应估计+Bootstrap CI。S_order、HB、WW_Elec的跨seed效应最稳健。阴性对照(Erot_sym)在某些seed中显示假阳性——共线性警告。</div>
-<div class="meta"><span class="badge badge-s">mediation_analysis.py</span><span class="badge badge-u">中介筛选——跨seed汇总</span></div>
-</div></details>
-
-<details class="card" id="med_attenuation">
-<summary class="card-h"><h3>中介效应衰减</h3><span>med_mediation_attenuation.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/med_mediation_attenuation.png" loading="lazy">
-<div class="desc"><b>核心故事</b>：分层中介模型中E_Field系数的衰减。M0(E_Field only)→M1(+S_order)→M2(+HB/D_xy/能量项)。c''≈0——控制结构后，电场的直接效应消失。</div>
-<div class="meta"><span class="badge badge-s">mediation_analysis.py</span><span class="badge badge-u">中介衰减——分层模型的证据</span></div>
-</div></details>
-
-<details class="card" id="med_path">
-<summary class="card-h"><h3>中介路径图</h3><span>med_mediation_path_diagram.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/med_mediation_path_diagram.png" loading="lazy">
-<div class="desc"><b>核心故事</b>：完整因果路径 E_Field→L1(S_order)→L2(HB/D_xy/能量)→Area。路径系数标注a/b/c/c''。控制L1+L2后c''不显著。</div>
-<div class="meta"><span class="badge badge-s">mediation_analysis.py</span><span class="badge badge-u">因果路径可视化</span></div>
-</div></details>
-
-<details class="card" id="med_layered">
-<summary class="card-h"><h3>分层中介路径</h3><span>med_mediation_layered_path.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/med_mediation_layered_path.png" loading="lazy">
-<div class="desc"><b>核心故事</b>：L1(取向层)和L2(结构/动力学层)的分层因果结构。每一层的独立贡献和传递路径。</div>
-<div class="meta"><span class="badge badge-s">mediation_analysis.py</span><span class="badge badge-u">分层因果链</span></div>
-</div></details>
-
-<details class="card" id="med_rwa">
-<summary class="card-h"><h3>相对权重分析 (RWA)</h3><span>med_mediation_rwa.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/med_mediation_rwa.png" loading="lazy">
-<div class="desc"><b>核心故事</b>：在高共线体系(VIF>100)下，用RWA(Johnson 2000)替代个别β系数。前四个中介各占~20%，紧密聚集——定量证实没有一个变量单独支配。</div>
-<div class="meta"><span class="badge badge-s">mediation_analysis.py</span><span class="badge badge-u">共线体系下的变量重要性</span></div>
-</div></details>
-
-<details class="card" id="med_cross_dataset">
-<summary class="card-h"><h3>跨 Seed 中介对比</h3><span>med_cross_dataset_comparison.png ▸</span></summary>
-<div class="card-b">
-<img src="gallery_images/med_cross_dataset_comparison.png" loading="lazy">
-<div class="desc"><b>核心故事</b>：四组seed(original/20/56/3080)的c''系数、间接效应和中介比例对比。三组seed与完全中介假说一致，seed3080存在抑制效应需进一步分析。</div>
-<div class="meta"><span class="badge badge-s">mediation_analysis.py</span><span class="badge badge-u">跨seed中介稳健性</span></div>
-</div></details>
-
-</section>
-
 <section id="s2"><h2>🔬 多方法交叉验证</h2>
 <details class="card" open id="pca_full_analysis">
 <summary class="card-h"><h3>PCA 全分析</h3><span>pca_full_analysis.png ▸</span></summary>
@@ -213,12 +129,30 @@ footer{text-align:center;padding:32px;color:#d1d5db;font-size:11px}
 <img src="gallery_images/Fig7_area_pdp.png" loading="lazy" alt="PDP 部分依赖图">
 <div class="desc"><b>核心故事</b>：模型无关的可解释性——与SHAP互补的第二套证据。PDP展示特征对预测的边际效应。注意：共线体系下ALE(Fig.8)更可信。</div>
 <div class="meta"><span class="badge badge-s">analysis.py → task_area_pdp</span><span class="badge badge-u">模型无关可解释性——与SHAP互补</span></div>
-</div></details><details class="card" id="Fig8_area_ale">
-<summary class="card-h"><h3>ALE 累积局部效应</h3><span>Fig8_area_ale.png ▸</span></summary>
+</div></details><details class="card" id="Fig8_area_conditional_expectation">
+<summary class="card-h"><h3>Fig.8: 条件期望 (ALE/CE)</h3><span>Fig8_area_conditional_expectation.png ▸</span></summary>
 <div class="card-b">
-<img src="gallery_images/Fig8_area_ale.png" loading="lazy" alt="ALE 累积局部效应">
-<div class="desc"><b>核心故事</b>：ALE是PDP在共线体系下的稳健替代——只在数据实际出现的区域计算局部效应。与PDP一致结论增强可信度。</div>
-<div class="meta"><span class="badge badge-s">analysis.py → task_area_ale</span><span class="badge badge-u">PDP稳健替代——共线体系下更可信</span></div>
+<img src="gallery_images/Fig8_area_conditional_expectation.png" loading="lazy" alt="Fig.8: 条件期望 (ALE/CE)">
+<div class="desc"><b>核心故事</b>：条件期望是PDP在共线体系下的稳健替代——只在数据实际出现的区域计算局部效应，避免外推偏差。与PDP一致结论增强可信度。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → task_area_conditional_expectation</span><span class="badge badge-u">PDP稳健替代——共线体系下更可信</span></div>
+</div></details><details class="card" id="extrapolation_paper">
+<summary class="card-h"><h3>外推验证 (Extrapolation)</h3><span>extrapolation_paper.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/extrapolation_paper.png" loading="lazy" alt="外推验证 (Extrapolation)">
+<div class="desc"><b>核心故事</b>：模型在训练电场范围之外(高场)的预测能力。回答审稿人"模型能不能预测没见过的高场"——如果外推失败，说明模型学到的是内插而非物理规律。</div>
+<div class="meta"><span class="badge badge-s">extrapolation_test.py</span><span class="badge badge-u">外推验证——模型是否学到了物理规律</span></div>
+</div></details><details class="card" id="model_statistical_tests">
+<summary class="card-h"><h3>模型间统计检验</h3><span>model_statistical_tests.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/model_statistical_tests.png" loading="lazy" alt="模型间统计检验">
+<div class="desc"><b>核心故事</b>：9个模型性能差异的统计显著性检验(Friedman/Wilcoxon)。回答"ExtraTrees真的显著优于Ridge吗"——如果差异不显著，说明模型选择对结论不敏感。</div>
+<div class="meta"><span class="badge badge-s">cross_variant_comparison.py</span><span class="badge badge-u">模型选择——性能差异的统计显著性</span></div>
+</div></details><details class="card" id="prediction_uncertainty">
+<summary class="card-h"><h3>预测不确定性 (Conformal)</h3><span>prediction_uncertainty.png ▸</span></summary>
+<div class="card-b">
+<img src="gallery_images/prediction_uncertainty.png" loading="lazy" alt="预测不确定性 (Conformal)">
+<div class="desc"><b>核心故事</b>：conformal prediction给出的预测不确定性区间。展示模型在每个预测上的置信度，而非只给一个点估计。</div>
+<div class="meta"><span class="badge badge-s">analysis.py → conformal</span><span class="badge badge-u">预测不确定性——量化预测可信度</span></div>
 </div></details></section>
 <section id="s3"><h2>🎯 全模型 SHAP 可解释性</h2>
 <details class="card" open id="shap_dependence">
@@ -284,15 +218,15 @@ footer{text-align:center;padding:32px;color:#d1d5db;font-size:11px}
 <div class="model-grid">
 <div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Boxplot</h4><img src="gallery_images/Ridge_cv_boxplot.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Error By Efield</h4><img src="gallery_images/Ridge_error_by_efield.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Feature Importance</h4><img src="gallery_images/Ridge_feature_importance.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals</h4><img src="gallery_images/Ridge_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals Hist</h4><img src="gallery_images/Ridge_residuals_hist.png" loading="lazy"></div>
 </div></div></details><details class="card" id="model_EBM">
-<summary class="card-h"><h3>EBM — 全部诊断图 (5 张)</h3><span>▸</span></summary>
+<summary class="card-h"><h3>EBM — 全部诊断图 (6 张)</h3><span>▸</span></summary>
 <div class="card-b">
 <div class="desc"><b>通用读图指南</b>：CV箱线=模型稳定性。误差vs电场=是否存在电场依赖系统偏差。特征重要性(FI)=树模型方差减少排名(非SHAP)。Pairplot=特征-目标关系全景。超参热图=GridSearch搜索空间。学习曲线=训练/验证收敛性。残差=模型假设检验。SHAP Summary=特征对预测的边际贡献(红高蓝低)。</div>
 <div class="model-grid">
-<div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Boxplot</h4><img src="gallery_images/EBM_cv_boxplot.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Error By Efield</h4><img src="gallery_images/EBM_error_by_efield.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Learning Curve</h4><img src="gallery_images/EBM_learning_curve.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals</h4><img src="gallery_images/EBM_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals Hist</h4><img src="gallery_images/EBM_residuals_hist.png" loading="lazy"></div>
+<div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Boxplot</h4><img src="gallery_images/EBM_cv_boxplot.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Error By Efield</h4><img src="gallery_images/EBM_error_by_efield.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Grid Heatmap</h4><img src="gallery_images/EBM_grid_heatmap.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Learning Curve</h4><img src="gallery_images/EBM_learning_curve.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals</h4><img src="gallery_images/EBM_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Residuals Hist</h4><img src="gallery_images/EBM_residuals_hist.png" loading="lazy"></div>
 </div></div></details></section>
 <section id="s5"><h2>🔧 内部验证（非正文图表）</h2>
 <div class="warning-box">⚠️ 以下为模型训练过程中的诊断图表（学习曲线、超参搜索、残差分析等），用于内部验证模型质量和调参决策，不纳入论文正文或 SI。</div>
-<div class="model-grid"><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig5 Shap Dependence Individual</h4><img src="gallery_images/Fig5_shap_dependence_individual.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig6 Shap Interaction</h4><img src="gallery_images/Fig6_shap_interaction.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig 3D Response Surface</h4><img src="gallery_images/Fig_3d_response_surface.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig Cross Model Residuals</h4><img src="gallery_images/Fig_cross_model_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig Feature Importance Consensus</h4><img src="gallery_images/Fig_feature_importance_consensus.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig Learning Curve 3X3</h4><img src="gallery_images/Fig_learning_curve_3x3.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig Response 2D</h4><img src="gallery_images/Fig_response_2d.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig S Order Violin</h4><img src="gallery_images/Fig_s_order_violin.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Style Example</h4><img src="gallery_images/style_example.png" loading="lazy"></div></div></section>
+<div class="model-grid"><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig5 Shap Dependence Individual</h4><img src="gallery_images/Fig5_shap_dependence_individual.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig6 Shap Interaction</h4><img src="gallery_images/Fig6_shap_interaction.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig8 Area Conditional Expectation</h4><img src="gallery_images/Fig8_area_conditional_expectation.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig 3D Response Surface</h4><img src="gallery_images/Fig_3d_response_surface.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig Cross Model Residuals</h4><img src="gallery_images/Fig_cross_model_residuals.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig Feature Importance Consensus</h4><img src="gallery_images/Fig_feature_importance_consensus.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig Learning Curve 3X3</h4><img src="gallery_images/Fig_learning_curve_3x3.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig Response 2D</h4><img src="gallery_images/Fig_response_2d.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Fig S Order Violin</h4><img src="gallery_images/Fig_s_order_violin.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cs Cross Seed Summary</h4><img src="gallery_images/cs_cross_seed_summary.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Cross Variant Best Model Radar</h4><img src="gallery_images/cv_cross_variant_best_model_radar.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Cross Variant Feature Importance</h4><img src="gallery_images/cv_cross_variant_feature_importance.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Cv Cross Variant Summary</h4><img src="gallery_images/cv_cross_variant_summary.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Extrapolation Paper</h4><img src="gallery_images/extrapolation_paper.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Med Conditional Dependence</h4><img src="gallery_images/med_conditional_dependence.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Med Cross Dataset Comparison</h4><img src="gallery_images/med_cross_dataset_comparison.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Med Mediation Attenuation</h4><img src="gallery_images/med_mediation_attenuation.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Med Mediation Layered Path</h4><img src="gallery_images/med_mediation_layered_path.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Med Mediation Path Diagram</h4><img src="gallery_images/med_mediation_path_diagram.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Med Mediation Rwa</h4><img src="gallery_images/med_mediation_rwa.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Med Mediation Screening</h4><img src="gallery_images/med_mediation_screening.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Model Statistical Tests</h4><img src="gallery_images/model_statistical_tests.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Prediction Uncertainty</h4><img src="gallery_images/prediction_uncertainty.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Style Example</h4><img src="gallery_images/style_example.png" loading="lazy"></div></div></section>
 <footer>E-Field ML-MD Analysis Gallery · 9 Models · 103 Images · 导师汇报版</footer>
 </main>
 </body>
