@@ -221,11 +221,13 @@ footer{text-align:center;padding:32px;color:#d1d5db;font-size:11px}
 <div class="meta"><span class="badge badge-s">analysis.py → conformal</span><span class="badge badge-u">预测不确定性量化</span></div>
 </div></details></section>
 <section id="s3"><h2>🎯 全模型 SHAP 可解释性</h2>
-<details class="card" open id="shap_dependence">
-<summary class="card-h"><h3>SHAP Dependence 系列</h3><span>shap_dependence.png ▸</span></summary>
+<details class="card" open id="SHAP_Dependence_系列">
+<summary class="card-h"><h3>SHAP Dependence 系列 (6 张)</h3><span>▸</span></summary>
 <div class="card-b">
-<img src="gallery_images/shap_dependence.png" loading="lazy" alt="SHAP Dependence 系列">
-<div class="desc"><b>核心故事</b>：逐特征放大——特征值→SHAP贡献的完整映射。颜色=交互特征。单调=线性，S形=饱和，U形=最优值。<br><b>包含</b>：cos_theta_x, HB, Mean_HB, D_xy, Water-Graphene_LJ, Water-Water_Elec等。</div>
+<div class="desc"><b>核心故事</b>：逐特征放大——特征值→SHAP贡献的完整映射。颜色=交互特征。单调=线性，S形=饱和(Langevin型)，U形=最优值。</div>
+<div class="model-grid">
+<div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Dependence D Xy Å² Ps</h4><img src="gallery_images/shap_dependence_D_xy_Å²_ps.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Dependence Hb</h4><img src="gallery_images/shap_dependence_HB.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Dependence Mean Hb</h4><img src="gallery_images/shap_dependence_Mean_HB.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Dependence Water-Graphene Lj Kcal Mol</h4><img src="gallery_images/shap_dependence_Water-Graphene_LJ_kcal_mol.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Dependence Water-Water Elec Kcal Mol</h4><img src="gallery_images/shap_dependence_Water-Water_Elec_kcal_mol.png" loading="lazy"></div><div><h4 style="font-size:11px;color:#536471;margin-bottom:2px">Shap Dependence Cos Theta X</h4><img src="gallery_images/shap_dependence_cos_theta_x.png" loading="lazy"></div>
+</div>
 <div class="meta"><span class="badge badge-s">analysis.py</span><span class="badge badge-u">逐特征深入——效应形态与交互</span></div>
 </div></details><details class="card" id="各模型_SHAP_图">
 <summary class="card-h"><h3>各模型 SHAP 图 (10 张)</h3><span>▸</span></summary>
